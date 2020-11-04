@@ -1,0 +1,29 @@
+version: '3'
+services:
+  app:
+    container_name: go_app
+    depends_on:
+      - go_postgres
+    restart: 'no'
+    ports:
+      - 3000:3000
+    build:
+      context: ../
+      dockerfile: configs/Dockerfile
+    command: >
+      sh -c "make -C scripts setup &&
+             make -C scripts db_migrate &&
+             make -C scripts db_migrate_test &&
+             make -C scripts db_seed &&
+             make -C scripts db_seed_test"
+
+  go_postgres:
+    image: postgres:latest
+    container_name: go_postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: 'go'
+      POSTGRES_PASSWORD: 'testonly'
+      POSTGRES_DB: 'go'
+      POSTGRES_HOST_AUTH_METHOD: trust

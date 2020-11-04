@@ -1,0 +1,10 @@
+development:
+  dialect: postgres
+  datasource: host=localhost port=5432 user=${DB_DEV_USERNAME} password=${DB_DEV_PASSWORD} dbname=${DB_DEV_NAME} sslmode=disable
+  dir: ../scripts/seed
+  table: migrations
+test:
+  dialect: postgres
+  datasource: host=localhost port=5432 user=${DB_TEST_USERNAME} password=${DB_TEST_PASSWORD} dbname=${DB_TEST_NAME} sslmode=disable
+  dir: ../scripts/seed
+  table: migrations
